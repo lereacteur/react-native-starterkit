@@ -44,23 +44,26 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {isLoading ? (
-          // We haven't finished checking for the token yet
-          <Stack.Screen name="Splash">{() => null}</Stack.Screen>
-        ) : userToken === null ? (
-          // No token found, user isn't signed in
-          <>
-            <Stack.Screen name="SignIn" options={{ header: () => null }}>
-              {() => <SignInScreen setToken={setToken} />}
-            </Stack.Screen>
-            <Stack.Screen name="SignUp">
-              {() => <SignUpScreen setToken={setToken} />}
-            </Stack.Screen>
-          </>
-        ) : (
-          // User is signed in
-          <Stack.Screen name="Tab" options={{ header: () => null }}>
+      {isLoading ? null : userToken === null ? ( // We haven't finished checking for the token yet
+        // No token found, user isn't signed in
+        <Stack.Navigator>
+          <Stack.Screen
+            name="SignIn"
+            options={{ header: () => null, animationEnabled: false }}
+          >
+            {() => <SignInScreen setToken={setToken} />}
+          </Stack.Screen>
+          <Stack.Screen name="SignUp">
+            {() => <SignUpScreen setToken={setToken} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      ) : (
+        // User is signed in
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Tab"
+            options={{ header: () => null, animationEnabled: false }}
+          >
             {() => (
               <Tab.Navigator
                 screenOptions={({ route }) => {
@@ -76,7 +79,7 @@ export default function App() {
                         <Ionicons name={iconName} size={size} color={color} />
                       );
                     },
-                    title: route.name === "undefined" ? "Home" : route.name // known issue : route.name shouldn't be undefined
+                    title: route.name
                   };
                 }}
                 tabBarOptions={{
@@ -84,7 +87,7 @@ export default function App() {
                   inactiveTintColor: "gray"
                 }}
               >
-                <Tab.Screen name="Something">
+                <Tab.Screen name="Home">
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
@@ -126,8 +129,8 @@ export default function App() {
               </Tab.Navigator>
             )}
           </Stack.Screen>
-        )}
-      </Stack.Navigator>
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
