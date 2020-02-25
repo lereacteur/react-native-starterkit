@@ -66,28 +66,20 @@ export default function App() {
           >
             {() => (
               <Tab.Navigator
-                screenOptions={({ route }) => {
-                  return {
-                    tabBarIcon: ({ focused, color, size }) => {
-                      let iconName;
-                      if (route.name === "Settings") {
-                        iconName = `ios-options`;
-                      } else {
-                        iconName = `ios-home`;
-                      }
-                      return (
-                        <Ionicons name={iconName} size={size} color={color} />
-                      );
-                    },
-                    title: route.name
-                  };
-                }}
                 tabBarOptions={{
                   activeTintColor: "tomato",
                   inactiveTintColor: "gray"
                 }}
               >
-                <Tab.Screen name="Home">
+                <Tab.Screen
+                  name="Home"
+                  options={{
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons name={"ios-home"} size={size} color={color} />
+                    )
+                  }}
+                >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
@@ -114,7 +106,19 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                <Tab.Screen name="Settings">
+                <Tab.Screen
+                  name="Settings"
+                  options={{
+                    tabBarLabel: "Settings",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"ios-options"}
+                        size={size}
+                        color={color}
+                      />
+                    )
+                  }}
+                >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
