@@ -86,7 +86,6 @@ export default function App() {
                         name="Home"
                         options={{
                           title: "My App",
-                          tabBarLabel: "Home",
                           headerStyle: { backgroundColor: "red" },
                           headerTitleStyle: { color: "white" }
                         }}
@@ -97,8 +96,7 @@ export default function App() {
                       <Stack.Screen
                         name="Profile"
                         options={{
-                          title: "User Profile",
-                          tabBarLabel: "Profile"
+                          title: "User Profile"
                         }}
                       >
                         {() => <ProfileScreen />}
