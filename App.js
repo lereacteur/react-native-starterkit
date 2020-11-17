@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -17,7 +17,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
 
-  const setToken = async token => {
+  const setToken = async (token) => {
     if (token) {
       AsyncStorage.setItem("userToken", token);
     } else {
@@ -68,7 +68,7 @@ export default function App() {
               <Tab.Navigator
                 tabBarOptions={{
                   activeTintColor: "tomato",
-                  inactiveTintColor: "gray"
+                  inactiveTintColor: "gray",
                 }}
               >
                 <Tab.Screen
@@ -77,7 +77,7 @@ export default function App() {
                     tabBarLabel: "Home",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons name={"ios-home"} size={size} color={color} />
-                    )
+                    ),
                   }}
                 >
                   {() => (
@@ -87,7 +87,7 @@ export default function App() {
                         options={{
                           title: "My App",
                           headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" }
+                          headerTitleStyle: { color: "white" },
                         }}
                       >
                         {() => <HomeScreen />}
@@ -96,7 +96,7 @@ export default function App() {
                       <Stack.Screen
                         name="Profile"
                         options={{
-                          title: "User Profile"
+                          title: "User Profile",
                         }}
                       >
                         {() => <ProfileScreen />}
@@ -114,7 +114,7 @@ export default function App() {
                         size={size}
                         color={color}
                       />
-                    )
+                    ),
                   }}
                 >
                   {() => (
