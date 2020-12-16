@@ -47,10 +47,7 @@ export default function App() {
       {isLoading ? null : userToken === null ? ( // We haven't finished checking for the token yet
         // No token found, user isn't signed in
         <Stack.Navigator>
-          <Stack.Screen
-            name="SignIn"
-            options={{ header: () => null, animationEnabled: false }}
-          >
+          <Stack.Screen name="SignIn" options={{ animationEnabled: false }}>
             {() => <SignInScreen setToken={setToken} />}
           </Stack.Screen>
           <Stack.Screen name="SignUp">
@@ -62,7 +59,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="Tab"
-            options={{ header: () => null, animationEnabled: false }}
+            options={{ headerShown: false, animationEnabled: false }}
           >
             {() => (
               <Tab.Navigator
