@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import SplashScreen from "./containers/SplashScreen";
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,38 +36,48 @@ export default function App() {
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      setIsLoading(false);
       setUserToken(userToken);
+
+      setIsLoading(false);
     };
 
     bootstrapAsync();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(userToken);
+  // }, [userToken]);
+
+  if (isLoading === true) {
+    // We haven't finished checking for the token yet
+    return <SplashScreen />;
+  }
+
   return (
     <NavigationContainer>
-      {isLoading ? null : userToken === null ? ( // We haven't finished checking for the token yet
-        // No token found, user isn't signed in
-        <Stack.Navigator>
-          <Stack.Screen name="SignIn">
-            {() => <SignInScreen setToken={setToken} />}
-          </Stack.Screen>
-          <Stack.Screen name="SignUp">
-            {() => <SignUpScreen setToken={setToken} />}
-          </Stack.Screen>
-        </Stack.Navigator>
-      ) : (
-        // User is signed in
-        <Stack.Navigator>
+      <Stack.Navigator>
+        {userToken === null ? (
+          // No token found, user isn't signed in
+          <>
+            <Stack.Screen name="SignIn">
+              {() => <SignInScreen setToken={setToken} />}
+            </Stack.Screen>
+            <Stack.Screen name="SignUp">
+              {() => <SignUpScreen setToken={setToken} />}
+            </Stack.Screen>
+          </>
+        ) : (
+          // User is signed in ! 🎉
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
             {() => (
               <Tab.Navigator
-                tabBarOptions={{
-                  activeTintColor: "tomato",
-                  inactiveTintColor: "gray",
+                screenOptions={{
+                  tabBarActiveTintColor: "tomato",
+                  tabBarInactiveTintColor: "gray",
                 }}
               >
                 <Tab.Screen
-                  name="Home"
+                  name="TabHome"
                   options={{
                     tabBarLabel: "Home",
                     tabBarIcon: ({ color, size }) => (
@@ -99,7 +110,7 @@ export default function App() {
                   )}
                 </Tab.Screen>
                 <Tab.Screen
-                  name="Settings"
+                  name="TabSettings"
                   options={{
                     tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
@@ -115,7 +126,10 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Settings"
-                        options={{ title: "Settings", tabBarLabel: "Settings" }}
+                        options={{
+                          title: "Settings",
+                          // tabBarLabel: "Settingssss",
+                        }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
                       </Stack.Screen>
@@ -125,8 +139,8 @@ export default function App() {
               </Tab.Navigator>
             )}
           </Stack.Screen>
-        </Stack.Navigator>
-      )}
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
