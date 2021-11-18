@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
@@ -11,7 +11,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -44,13 +44,9 @@ export default function App() {
     bootstrapAsync();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(userToken);
-  // }, [userToken]);
-
   if (isLoading === true) {
     // We haven't finished checking for the token yet
-    return <SplashScreen />;
+    return null;
   }
 
   return (
@@ -72,6 +68,7 @@ export default function App() {
             {() => (
               <Tab.Navigator
                 screenOptions={{
+                  headerShown: false,
                   tabBarActiveTintColor: "tomato",
                   tabBarInactiveTintColor: "gray",
                 }}
