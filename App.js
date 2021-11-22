@@ -20,9 +20,9 @@ export default function App() {
 
   const setToken = async (token) => {
     if (token) {
-      AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userToken", token);
     } else {
-      AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userToken");
     }
 
     setUserToken(token);
@@ -125,7 +125,6 @@ export default function App() {
                         name="Settings"
                         options={{
                           title: "Settings",
-                          // tabBarLabel: "Settingssss",
                         }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
