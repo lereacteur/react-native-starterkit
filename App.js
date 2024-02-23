@@ -78,7 +78,7 @@ export default function App() {
                   options={{
                     tabBarLabel: "Home",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons name={"ios-home"} size={size} color={color} />
+                      <Ionicons name={"home"} size={size} color={color} />
                     ),
                   }}
                 >
@@ -111,11 +111,7 @@ export default function App() {
                   options={{
                     tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
-                        size={size}
-                        color={color}
-                      />
+                      <Ionicons name={"settings"} size={size} color={color} />
                     ),
                   }}
                 >
